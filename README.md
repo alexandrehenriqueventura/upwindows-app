@@ -57,6 +57,22 @@
 
 ## Build
 
+### 1. Instalar o .NET 8 SDK (via winget)
+
+Caso ainda não tenha o .NET 8 SDK instalado, execute no terminal como Administrador:
+
+```bash
+winget install Microsoft.DotNet.SDK.8
+```
+
+Após a instalação, feche e reabra o terminal para que o comando `dotnet` seja reconhecido. Verifique com:
+
+```bash
+dotnet --version
+```
+
+### 2. Compilar o projeto
+
 ```bash
 # Restaurar dependências
 dotnet restore
