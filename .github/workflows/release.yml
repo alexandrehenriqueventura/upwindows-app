@@ -1,0 +1,63 @@
+name: Build e Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build UpWindowsApp (win-x64)
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout do repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restaurar dependencias
+        run: dotnet restore UpWindowsApp/UpWindowsApp.csproj
+
+      - name: Publicar como .exe unico portavel
+        run: >
+          dotnet publish UpWindowsApp/UpWindowsApp.csproj
+          -c Release
+          -r win-x64
+          --self-contained true
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:EnableCompressionInSingleFile=true
+          -o ./publish
+
+      - name: Renomear executavel com versao da tag
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          Rename-Item -Path "./publish/UpWindowsApp.exe" -NewName "UpWindows-$tag.exe"
+
+      - name: Criar GitHub Release e anexar .exe
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "UpWindows App ${{ github.ref_name }}"
+          body: |
+            ## UpWindows App ${{ github.ref_name }}
+
+            Otimizador e Debloater para Windows 10/11 — executavel standalone, sem necessidade de instalar o .NET.
+
+            ### Como usar
+            1. Baixe o arquivo `UpWindows-${{ github.ref_name }}.exe` abaixo
+            2. Clique com o botao direito -> **Executar como Administrador**
+            3. Pronto!
+
+            ### Novidades desta versao
+            Consulte o [README](https://github.com/alexandrehenriqueventura/upwindows-app#readme) para ver todas as funcionalidades.
+          files: ./publish/UpWindows-${{ github.ref_name }}.exe
+          draft: false
+          prerelease: false
