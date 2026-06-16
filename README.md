@@ -73,6 +73,22 @@ dotnet --version
 
 ### 2. Compilar o projeto
 
+**a) Baixar o repositório**
+
+Acesse a página do projeto no GitHub, clique em **Code → Download ZIP** e salve o arquivo em um local de sua preferência.
+
+**b) Descompactar o pacote**
+
+Clique com o botão direito no arquivo `.zip` baixado e selecione **Extrair tudo...**. Escolha o destino e conclua a extração.
+
+**c) Abrir o terminal dentro da pasta**
+
+Navegue até a pasta extraída (`upwindows-app-main`), clique na **barra de endereço** do Explorador de Arquivos, digite `cmd` ou `powershell` e pressione **Enter**. O terminal já abrirá apontando para o diretório correto.
+
+> **Dica:** você também pode usar `Shift + Clique Direito` dentro da pasta e selecionar **Abrir janela do PowerShell aqui**.
+
+**d) Executar os comandos de build**
+
 ```bash
 # Restaurar dependências
 dotnet restore
