@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>UpWindowsApp</AssemblyName>
+    <RootNamespace>UpWindowsApp</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Company>alexandrehenriqueventura</Company>
+    <Product>UpWindows App</Product>
+    <Description>Otimizador e Debloater para Windows</Description>
+    <Copyright>MIT 2025</Copyright>
+  </PropertyGroup>
+
+  <!-- Necessario para PackageManager (remocao de AppX) -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.2" />
+  </ItemGroup>
+
+</Project>
