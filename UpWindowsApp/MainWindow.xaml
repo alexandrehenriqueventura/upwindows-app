@@ -1,12 +1,11 @@
 <Window x:Class="UpWindowsApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="UpWindows - Otimizador e Debloater" Height="660" Width="920"
+        Title="UpWindows - Otimizador e Debloater" Height="740" Width="920"
         Background="#121214" Foreground="#FFFFFF" FontFamily="Segoe UI"
         WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
 
     <Window.Resources>
-        <!-- Estilo padrao dos botoes de acao -->
         <Style TargetType="Button">
             <Setter Property="Background" Value="#3B82F6"/>
             <Setter Property="Foreground" Value="White"/>
@@ -40,7 +39,6 @@
             </Setter>
         </Style>
 
-        <!-- Estilo dos botoes da sidebar -->
         <Style x:Key="SidebarBtn" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="#D1D5DB"/>
@@ -177,87 +175,92 @@
                             </Border>
                         </Grid>
 
-                        <!-- Colunas principais -->
-                        <Grid Grid.Row="2" VerticalAlignment="Top">
+                        <!-- Colunas principais com ScrollViewer para evitar corte de conteudo -->
+                        <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="15"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <!-- Coluna Esquerda -->
-                            <StackPanel Grid.Column="0">
-                                <!-- Seguranca / Ponto de Restauracao -->
-                                <Border Background="#1A1A1E" CornerRadius="6" BorderBrush="#25252B" BorderThickness="1"
-                                        Padding="15" Margin="0,0,0,15">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Grid.Row="0" Text="Seguranca do Sistema" FontSize="15" FontWeight="Bold"
-                                                   Margin="0,0,0,8" Foreground="#8B5CF6"/>
-                                        <TextBlock Grid.Row="1" TextWrapping="Wrap" Foreground="#D1D5DB" FontSize="11" Margin="0,0,0,12"
-                                                   Text="Antes de otimizar, crie um Ponto de Restauracao para permitir a reversao do estado do Windows caso ocorra alguma instabilidade."/>
-                                        <StackPanel Grid.Row="2" Orientation="Horizontal">
-                                            <Button x:Name="BtnCreateRestore" Content="Criar Ponto" Background="#8B5CF6"
-                                                    Height="32" FontSize="12" FontWeight="Bold" Padding="10,0" Margin="0,0,8,0"
-                                                    Click="BtnCreateRestore_Click"/>
-                                            <Button x:Name="BtnExit" Content="Sair" Background="#EF4444"
-                                                    Height="32" FontSize="12" FontWeight="Bold" Padding="10,0"
-                                                    Click="BtnExit_Click"/>
+                            <!-- Coluna Esquerda com ScrollViewer -->
+                            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+                                <StackPanel>
+                                    <!-- Seguranca / Ponto de Restauracao -->
+                                    <Border Background="#1A1A1E" CornerRadius="6" BorderBrush="#25252B" BorderThickness="1"
+                                            Padding="15" Margin="0,0,0,12">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" Text="Seguranca do Sistema" FontSize="15" FontWeight="Bold"
+                                                       Margin="0,0,0,8" Foreground="#8B5CF6"/>
+                                            <TextBlock Grid.Row="1" TextWrapping="Wrap" Foreground="#D1D5DB" FontSize="11" Margin="0,0,0,12"
+                                                       Text="Antes de otimizar, crie um Ponto de Restauracao para permitir a reversao do estado do Windows caso ocorra alguma instabilidade."/>
+                                            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                                <Button x:Name="BtnCreateRestore" Content="Criar Ponto" Background="#8B5CF6"
+                                                        Height="32" FontSize="12" FontWeight="Bold" Padding="10,0" Margin="0,0,8,0"
+                                                        Click="BtnCreateRestore_Click"/>
+                                                <Button x:Name="BtnExit" Content="Sair" Background="#EF4444"
+                                                        Height="32" FontSize="12" FontWeight="Bold" Padding="10,0"
+                                                        Click="BtnExit_Click"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- Hardware com MinHeight para garantir CPU/GPU/RAM visiveis -->
+                                    <Border Background="#1A1A1E" CornerRadius="6" BorderBrush="#25252B" BorderThickness="1"
+                                            Padding="15" MinHeight="155">
+                                        <StackPanel>
+                                            <TextBlock Text="Hardware" FontSize="15" FontWeight="Bold" Margin="0,0,0,10" Foreground="#3B82F6"/>
+                                            <TextBlock Text="Processador:" FontWeight="SemiBold" FontSize="11" Foreground="#9CA3AF"/>
+                                            <TextBlock x:Name="TxtCpu" Text="Detectando..." FontSize="12" Foreground="#E5E7EB" Margin="0,2,0,8" TextWrapping="Wrap"/>
+                                            <TextBlock Text="Placa de Video:" FontWeight="SemiBold" FontSize="11" Foreground="#9CA3AF"/>
+                                            <TextBlock x:Name="TxtGpu" Text="Detectando..." FontSize="12" Foreground="#E5E7EB" Margin="0,2,0,8" TextWrapping="Wrap"/>
+                                            <TextBlock Text="Memoria RAM:" FontWeight="SemiBold" FontSize="11" Foreground="#9CA3AF"/>
+                                            <TextBlock x:Name="TxtRam" Text="Detectando..." FontSize="12" Foreground="#E5E7EB" Margin="0,2,0,0" TextWrapping="Wrap"/>
                                         </StackPanel>
-                                    </Grid>
-                                </Border>
+                                    </Border>
+                                </StackPanel>
+                            </ScrollViewer>
 
-                                <!-- Hardware -->
-                                <Border Background="#1A1A1E" CornerRadius="6" BorderBrush="#25252B" BorderThickness="1" Padding="15">
-                                    <StackPanel>
-                                        <TextBlock Text="Hardware" FontSize="15" FontWeight="Bold" Margin="0,0,0,10" Foreground="#3B82F6"/>
-                                        <TextBlock Text="Processador:" FontWeight="SemiBold" FontSize="11" Foreground="#9CA3AF"/>
-                                        <TextBlock x:Name="TxtCpu" Text="Detectando..." FontSize="12" Foreground="#E5E7EB" Margin="0,0,0,8" TextWrapping="Wrap"/>
-                                        <TextBlock Text="Placa de Video:" FontWeight="SemiBold" FontSize="11" Foreground="#9CA3AF"/>
-                                        <TextBlock x:Name="TxtGpu" Text="Detectando..." FontSize="12" Foreground="#E5E7EB" Margin="0,0,0,8" TextWrapping="Wrap"/>
-                                        <TextBlock Text="Memoria RAM:" FontWeight="SemiBold" FontSize="11" Foreground="#9CA3AF"/>
-                                        <TextBlock x:Name="TxtRam" Text="Detectando..." FontSize="12" Foreground="#E5E7EB" TextWrapping="Wrap"/>
-                                    </StackPanel>
-                                </Border>
-                            </StackPanel>
+                            <!-- Coluna Direita com ScrollViewer -->
+                            <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
+                                <StackPanel>
+                                    <!-- Armazenamento -->
+                                    <Border Background="#1A1A1E" CornerRadius="6" BorderBrush="#25252B" BorderThickness="1"
+                                            Padding="15" Margin="0,0,0,12">
+                                        <StackPanel>
+                                            <TextBlock Text="Armazenamento (C:\)" FontSize="15" FontWeight="Bold"
+                                                       Margin="0,0,0,10" Foreground="#10B981"/>
+                                            <TextBlock x:Name="TxtStorageFree" Text="Livre: Detectando..." FontSize="12" Foreground="#E5E7EB" Margin="0,0,0,5"/>
+                                            <ProgressBar x:Name="ProgStorage" Height="8" Minimum="0" Maximum="100" Value="0"
+                                                         Background="#2A2A35" Foreground="#10B981" BorderThickness="0" Margin="0,0,0,5"/>
+                                            <TextBlock x:Name="TxtStorageTotal" Text="Total: --- GB" FontSize="10"
+                                                       Foreground="#6B7280" HorizontalAlignment="Right"/>
+                                        </StackPanel>
+                                    </Border>
 
-                            <!-- Coluna Direita -->
-                            <StackPanel Grid.Column="2">
-                                <!-- Armazenamento -->
-                                <Border Background="#1A1A1E" CornerRadius="6" BorderBrush="#25252B" BorderThickness="1"
-                                        Padding="15" Margin="0,0,0,15">
-                                    <StackPanel>
-                                        <TextBlock Text="Armazenamento (C:\)" FontSize="15" FontWeight="Bold"
-                                                   Margin="0,0,0,10" Foreground="#10B981"/>
-                                        <TextBlock x:Name="TxtStorageFree" Text="Livre: Detectando..." FontSize="12" Foreground="#E5E7EB" Margin="0,0,0,5"/>
-                                        <ProgressBar x:Name="ProgStorage" Height="8" Minimum="0" Maximum="100" Value="0"
-                                                     Background="#2A2A35" Foreground="#10B981" BorderThickness="0" Margin="0,0,0,5"/>
-                                        <TextBlock x:Name="TxtStorageTotal" Text="Total: --- GB" FontSize="10"
-                                                   Foreground="#6B7280" HorizontalAlignment="Right"/>
-                                    </StackPanel>
-                                </Border>
-
-                                <!-- Acoes Rapidas -->
-                                <Border Background="#1A1A1E" CornerRadius="6" BorderBrush="#25252B" BorderThickness="1" Padding="15">
-                                    <StackPanel>
-                                        <TextBlock Text="Acoes Rapidas" FontSize="15" FontWeight="Bold"
-                                                   Margin="0,0,0,10" Foreground="#F43F5E"/>
-                                        <Button x:Name="BtnCleanTemp"  Content="Limpar Arquivos Temporarios"
-                                                Background="#2A2A35" Height="30" FontSize="12" FontWeight="SemiBold"
-                                                Margin="0,0,0,6" Click="BtnCleanTemp_Click"/>
-                                        <Button x:Name="BtnEmptyTrash" Content="Esvaziar Lixeira"
-                                                Background="#2A2A35" Height="30" FontSize="12" FontWeight="SemiBold"
-                                                Margin="0,0,0,6" Click="BtnEmptyTrash_Click"/>
-                                        <Button x:Name="BtnFlushDNS"   Content="Limpar Cache DNS"
-                                                Background="#2A2A35" Height="30" FontSize="12" FontWeight="SemiBold"
-                                                Click="BtnFlushDNS_Click"/>
-                                    </StackPanel>
-                                </Border>
-                            </StackPanel>
+                                    <!-- Acoes Rapidas -->
+                                    <Border Background="#1A1A1E" CornerRadius="6" BorderBrush="#25252B" BorderThickness="1" Padding="15">
+                                        <StackPanel>
+                                            <TextBlock Text="Acoes Rapidas" FontSize="15" FontWeight="Bold"
+                                                       Margin="0,0,0,10" Foreground="#F43F5E"/>
+                                            <Button x:Name="BtnCleanTemp"  Content="Limpar Arquivos Temporarios"
+                                                    Background="#2A2A35" Height="30" FontSize="12" FontWeight="SemiBold"
+                                                    Margin="0,0,0,6" Click="BtnCleanTemp_Click"/>
+                                            <Button x:Name="BtnEmptyTrash" Content="Esvaziar Lixeira"
+                                                    Background="#2A2A35" Height="30" FontSize="12" FontWeight="SemiBold"
+                                                    Margin="0,0,0,6" Click="BtnEmptyTrash_Click"/>
+                                            <Button x:Name="BtnFlushDNS"   Content="Limpar Cache DNS"
+                                                    Background="#2A2A35" Height="30" FontSize="12" FontWeight="SemiBold"
+                                                    Click="BtnFlushDNS_Click"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </ScrollViewer>
                         </Grid>
                     </Grid>
                 </TabItem>
